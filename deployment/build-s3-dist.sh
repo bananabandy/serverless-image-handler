@@ -26,15 +26,15 @@ fi
 # Build source
 echo "Staring to build distribution"
 echo "export deployment_dir=`pwd`"
-export deployment_dir=`pwd`
-echo "mkdir -p dist"
-mkdir -p dist
-echo "cp -f serverless-image-handler.template dist"
-cp -f serverless-image-handler.template dist
+export deployment_dir=`pwd`/deployment
+echo "mkdir -p $deployment_dir/dist"
+mkdir -p $deployment_dir/dist
+echo "cp -f $deployment_dir/serverless-image-handler.template $deployment_dir/dist/."
+cp -f $deployment_dir/serverless-image-handler.template $deployment_dir/dist/.
 echo "Updating code source bucket in template with $1"
 replace="s/%%BUCKET_NAME%%/$1/g"
-echo "sed -i '' -e $replace dist/serverless-image-handler.template"
-sed -i '' -e $replace dist/serverless-image-handler.template
+echo "sed -i '' -e $replace $deployment_dir/dist/serverless-image-handler.template"
+sed -i '' -e $replace $deployment_dir/dist/serverless-image-handler.template
 echo "Creating UI ZIP file"
 cd $deployment_dir/../source/ui
 zip -q -r9 $deployment_dir/dist/serverless-image-handler-ui.zip *
@@ -60,20 +60,35 @@ echo "virtualenv env"
 virtualenv env
 echo "source env/bin/activate"
 source env/bin/activate
-cd ../..
 pwd
-echo "pip install source/image-handler/. --target=$VIRTUAL_ENV/lib/python2.7/site-packages/"
-pip install source/image-handler/. --target=$VIRTUAL_ENV/lib/python2.7/site-packages/
-echo "pip install -r source/image-handler/requirements.txt --target=$VIRTUAL_ENV/lib/python2.7/site-packages/"
-pip install -r source/image-handler/requirements.txt --target=$VIRTUAL_ENV/lib/python2.7/site-packages/
+echo "pip install $deployment_dir/../source/image-handler/. --target=$VIRTUAL_ENV/lib/python2.7/site-packages/"
+pip install $deployment_dir/../source/image-handler/. --target=$VIRTUAL_ENV/lib/python2.7/site-packages/
+echo "pip install -r $deployment_dir/../source/image-handler/requirements.txt --target=$VIRTUAL_ENV/lib/python2.7/site-packages/"
+pip install -r $deployment_dir/../source/image-handler/requirements.txt --target=$VIRTUAL_ENV/lib/python2.7/site-packages/
+cd $VIRTUAL_ENV
+pwd
+echo "git clone git://github.com/kohler/gifsicle.git gifsicle_s"
+git clone git://github.com/kohler/gifsicle.git gifsicle_s
+cd gifsicle_s
+pwd
+echo "autoreconf -i"
+autoreconf -i
+echo "./configure --prefix=$VIRTUAL_ENV"
+./configure LDFLAGS="-static" --prefix=$VIRTUAL_ENV
+echo "make"
+make
+echo "make install"
+make install
+echo "cp bin/gifsicle $VIRTUAL_ENV"
+cp -f bin/gifsicle $VIRTUAL_ENV
 cd $VIRTUAL_ENV
 pwd
 echo "git clone git://github.com/pornel/pngquant.git pngquant_s"
 git clone git://github.com/pornel/pngquant.git pngquant_s
 cd pngquant_s
 pwd
-echo "./configure --enable-static --disable-shared"
-./configure --enable-static --disable-shared
+echo "./configure "
+./configure LDFLAGS="-static"
 echo "make"
 make
 echo "cp pngquant $VIRTUAL_ENV"
@@ -86,9 +101,13 @@ cd $VIRTUAL_ENV
 pwd
 echo "zip -q -g $VIRTUAL_ENV/../serverless-image-handler.zip pngquant"
 zip -q -g $VIRTUAL_ENV/../serverless-image-handler.zip pngquant
+echo "zip -q -g $VIRTUAL_ENV/../serverless-image-handler.zip gifsicle"
+zip -q -g $VIRTUAL_ENV/../serverless-image-handler.zip gifsicle
 cd ..
 zip -q -d serverless-image-handler.zip pip*
 zip -q -d serverless-image-handler.zip easy*
+echo "List files $VIRTUAL_ENV"
+ls -l $VIRTUAL_ENV
 echo "Clean up build material"
-rm -rf $VIRTUAL_ENV
+#rm -rf $VIRTUAL_ENV
 echo "Completed building distribution"
