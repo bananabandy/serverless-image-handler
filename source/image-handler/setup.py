@@ -7,7 +7,7 @@ tests_require = [
     'mock',
     'pytest'
 ]
-kirantambe
+
 setup(
     name='image_handler',
     version='2.0',

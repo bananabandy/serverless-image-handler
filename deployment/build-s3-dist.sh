@@ -63,12 +63,13 @@ virtualenv env
 echo "source env/bin/activate"
 source env/bin/activate
 pwd
+mkdir $VIRTUAL_ENV/lib/python2.7/site-packages/thumbor/optimizers/
+echo "cp $deployment_dir/../source/image-handler/optimizers/gifsicle.py $VIRTUAL_ENV/lib/python2.7/site-packages/thumbor/optimizers/."
+cp $deployment_dir/../source/image-handler/optimizers/gifsicle.py $VIRTUAL_ENV/lib/python2.7/site-packages/thumbor/optimizers/.
 echo "pip install $deployment_dir/../source/image-handler/. --target=$VIRTUAL_ENV/lib/python2.7/site-packages/"
 pip install $deployment_dir/../source/image-handler/. --target=$VIRTUAL_ENV/lib/python2.7/site-packages/
 echo "pip install -r $deployment_dir/../source/image-handler/requirements.txt --target=$VIRTUAL_ENV/lib/python2.7/site-packages/"
 pip install -r $deployment_dir/../source/image-handler/requirements.txt --target=$VIRTUAL_ENV/lib/python2.7/site-packages/
-echo "cp $deployment_dir/../source/image-handler/optimizers/gifsicle.py $VIRTUAL_ENV/lib/python2.7/site-packages/thumbor/optimizers/."
-cp $deployment_dir/../source/image-handler/optimizers/gifsicle.py $VIRTUAL_ENV/lib/python2.7/site-packages/thumbor/optimizers/.
 cd $VIRTUAL_ENV
 pwd
 echo "git clone git://github.com/kohler/gifsicle.git gifsicle_s"
