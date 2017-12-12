@@ -93,7 +93,7 @@ echo "make"
 make
 make install
 echo "cp bin/gifsicle $VIRTUAL_ENV"
-cp -f bin/gifsicle $VIRTUAL_ENV
+cp -f $VIRTUAL_ENV/bin/gifsicle $VIRTUAL_ENV
 cd $VIRTUAL_ENV/lib/python2.7/site-packages
 pwd
 echo "zip -q -r9 $VIRTUAL_ENV/../serverless-image-handler.zip *"
