@@ -42,41 +42,8 @@ from thumbor.server import *
 
 thumbor_config_path = '/var/task/image_handler/thumbor.conf'
 thumbor_socket = '/tmp/thumbor'
-import shutil
-import time
-import os
-import sys
 
 
-LAMBDA_TASK_ROOT = os.environ.get('LAMBDA_TASK_ROOT', os.path.dirname(os.path.abspath(__file__)))
-CURR_BIN_DIR = os.path.join(LAMBDA_TASK_ROOT, 'bin')
-LIB_DIR = os.path.join(LAMBDA_TASK_ROOT, 'lib')
-BIN_DIR = '/tmp/bin'
-# This is necessary as we don't have permissions in /var/tasks/bin where the lambda function is running
-def _init_bin(executable_name):
-    start = time.clock()
-    if not os.path.exists(BIN_DIR):
-        print("Creating bin folder")
-        os.makedirs(BIN_DIR)
-    print("Copying binaries for "+executable_name+" in /tmp/bin")
-    currfile = os.path.join(CURR_BIN_DIR, executable_name)
-    newfile  = os.path.join(BIN_DIR, executable_name)
-    shutil.copy2(currfile, newfile)
-    print("Giving new binaries permissions for lambda")
-    os.chmod(newfile, 0775)
-    elapsed = (time.clock() - start)
-    print(executable_name+" ready in "+str(elapsed)+'s.')
-
-# then if you're going to call a binary in a cmd, for instance pdftotext :
-
-_init_bin('gifsicle')
-print(os.environ['PYTHONPATH'].split(os.pathsep))
-print(os.environ['PATH'].split(os.pathsep))
-print(sys.path)
-sys.path.append(os.path.join(os.path.dirname(sys.argv[0]), BIN_DIR))
-print(os.environ['PYTHONPATH'].split(os.pathsep))
-print(os.environ['PATH'].split(os.pathsep))
-print(sys.path)
 def response_formater(status_code='400',
                       body={'message': 'error'},
                       cache_control='max-age=120,public',

@@ -7,7 +7,7 @@ tests_require = [
     'mock',
     'pytest'
 ]
-
+kirantambe
 setup(
     name='image_handler',
     version='2.0',
@@ -16,7 +16,7 @@ setup(
     license='ASL',
     zip_safe=False,
     test_suite = 'tests',
-    packages=['image_handler'],
+    packages=['image_handler', 'image_handler.optimizers'],
     package_dir={'image_handler': '.'},
     include_package_data=True,
     package_data={
@@ -26,7 +26,7 @@ setup(
         'botocore==1.3.7',
         'tornado_botocore==1.0.2',
         'requests_unixsocket>=0.1.5',
-        'thumbor>=6.3.2',
+        'thumbor>=6.2.1',
         'tc_aws==6.0.3',
         'opencv-python==3.2.0.6'
     ],
