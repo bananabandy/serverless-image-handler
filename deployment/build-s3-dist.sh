@@ -63,13 +63,22 @@ virtualenv env
 echo "source env/bin/activate"
 source env/bin/activate
 pwd
-mkdir $VIRTUAL_ENV/lib/python2.7/site-packages/thumbor/optimizers/
-echo "cp $deployment_dir/../source/image-handler/optimizers/gifsicle.py $VIRTUAL_ENV/lib/python2.7/site-packages/thumbor/optimizers/."
-cp $deployment_dir/../source/image-handler/optimizers/gifsicle.py $VIRTUAL_ENV/lib/python2.7/site-packages/thumbor/optimizers/.
 echo "pip install $deployment_dir/../source/image-handler/. --target=$VIRTUAL_ENV/lib/python2.7/site-packages/"
 pip install $deployment_dir/../source/image-handler/. --target=$VIRTUAL_ENV/lib/python2.7/site-packages/
 echo "pip install -r $deployment_dir/../source/image-handler/requirements.txt --target=$VIRTUAL_ENV/lib/python2.7/site-packages/"
 pip install -r $deployment_dir/../source/image-handler/requirements.txt --target=$VIRTUAL_ENV/lib/python2.7/site-packages/
+cd $VIRTUAL_ENV
+pwd
+echo "git clone git://github.com/pornel/pngquant.git pngquant_s"
+git clone git://github.com/pornel/pngquant.git pngquant_s
+cd pngquant_s
+pwd
+echo "./configure --enable-static --disable-shared"
+./configure --enable-static --disable-shared
+echo "make"
+make
+echo "cp pngquant $VIRTUAL_ENV"
+cp -f pngquant $VIRTUAL_ENV
 cd $VIRTUAL_ENV
 pwd
 echo "git clone git://github.com/kohler/gifsicle.git gifsicle_s"
@@ -79,37 +88,22 @@ pwd
 echo "./bootstrap.sh"
 ./bootstrap.sh
 echo "./configure --prefix=$VIRTUAL_ENV"
-./configure --prefix=$VIRTUAL_ENV
+./configure  --prefix=$VIRTUAL_ENV
 echo "make"
 make
-echo "make install"
 make install
-echo "cp $VIRTUAL_ENV/bin/gifsicle $VIRTUAL_ENV"
-cp -f $VIRTUAL_ENV/bin/gifsicle $VIRTUAL_ENV
-cd $VIRTUAL_ENV
-pwd
-echo "git clone git://github.com/pornel/pngquant.git pngquant_s"
-git clone git://github.com/pornel/pngquant.git pngquant_s
-cd pngquant_s
-pwd
-echo "./configure "
-./configure --prefix=$VIRTUAL_ENV
-echo "make"
-make
-echo "make install"
-make install
-echo "cp pngquant $VIRTUAL_ENV"
-cp -f $VIRTUAL_ENV/bin/pngquant $VIRTUAL_ENV
+echo "cp bin/gifsicle $VIRTUAL_ENV"
+cp -f bin/gifsicle $VIRTUAL_ENV
 cd $VIRTUAL_ENV/lib/python2.7/site-packages
 pwd
 echo "zip -q -r9 $VIRTUAL_ENV/../serverless-image-handler.zip *"
 zip -q -r9 $VIRTUAL_ENV/../serverless-image-handler.zip *
 cd $VIRTUAL_ENV
 pwd
-echo "zip -q -g $VIRTUAL_ENV/../serverless-image-handler.zip $VIRTUAL_ENV/bin/pngquant"
-zip -q -g $VIRTUAL_ENV/../serverless-image-handler.zip $VIRTUAL_ENV/bin/pngquant
-echo "zip -q -g $VIRTUAL_ENV/../serverless-image-handler.zip $VIRTUAL_ENV/bin/gifsicle"
-zip -q -g $VIRTUAL_ENV/../serverless-image-handler.zip $VIRTUAL_ENV/bin/gifsicle
+echo "zip -q -g $VIRTUAL_ENV/../serverless-image-handler.zip pngquant"
+zip -q -g $VIRTUAL_ENV/../serverless-image-handler.zip pngquant
+echo "zip -q -g $VIRTUAL_ENV/../serverless-image-handler.zip gifsicle"
+zip -q -g $VIRTUAL_ENV/../serverless-image-handler.zip gifsicle
 cd ..
 zip -q -d serverless-image-handler.zip pip*
 zip -q -d serverless-image-handler.zip easy*
