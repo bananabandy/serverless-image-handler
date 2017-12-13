@@ -63,6 +63,8 @@ virtualenv env
 echo "source env/bin/activate"
 source env/bin/activate
 pwd
+echo "pip install $deployment_dir/../source/thumbor/. --target=$VIRTUAL_ENV/lib/python2.7/site-packages/"
+pip install $deployment_dir/../source/thumbor/. --target=$VIRTUAL_ENV/lib/python2.7/site-packages/
 echo "pip install $deployment_dir/../source/image-handler/. --target=$VIRTUAL_ENV/lib/python2.7/site-packages/"
 pip install $deployment_dir/../source/image-handler/. --target=$VIRTUAL_ENV/lib/python2.7/site-packages/
 echo "pip install -r $deployment_dir/../source/image-handler/requirements.txt --target=$VIRTUAL_ENV/lib/python2.7/site-packages/"

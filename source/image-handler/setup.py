@@ -16,7 +16,7 @@ setup(
     license='ASL',
     zip_safe=False,
     test_suite = 'tests',
-    packages=['image_handler', 'image_handler.optimizers'],
+    packages=['image_handler'],
     package_dir={'image_handler': '.'},
     include_package_data=True,
     package_data={

@@ -28,8 +28,6 @@ import json
 import os
 import timeit
 
-from image_handler import gifsicle
-
 from image_handler import lambda_metrics
 from image_handler import lambda_rewrite
 from PIL import Image
