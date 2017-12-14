@@ -98,6 +98,10 @@ echo "cp bin/gifsicle $VIRTUAL_ENV"
 cp -f $VIRTUAL_ENV/bin/gifsicle $VIRTUAL_ENV
 cd $VIRTUAL_ENV/lib/python2.7/site-packages
 pwd
+echo "cp $deployment_dir/../ffmpeg/binary/ffmpeg ."
+cp $deployment_dir/../ffmpeg/binary/ffmpeg .
+echo "cp $deployment_dir/../ffmpeg/binary/ffprobe ."
+cp $deployment_dir/../ffmpeg/binary/ffprobe .
 echo "zip -q -r9 $VIRTUAL_ENV/../serverless-image-handler.zip *"
 zip -q -r9 $VIRTUAL_ENV/../serverless-image-handler.zip *
 cd $VIRTUAL_ENV
@@ -106,6 +110,10 @@ echo "zip -q -g $VIRTUAL_ENV/../serverless-image-handler.zip pngquant"
 zip -q -g $VIRTUAL_ENV/../serverless-image-handler.zip pngquant
 echo "zip -q -g $VIRTUAL_ENV/../serverless-image-handler.zip gifsicle"
 zip -q -g $VIRTUAL_ENV/../serverless-image-handler.zip gifsicle
+echo "zip -q -g $VIRTUAL_ENV/../serverless-image-handler.zip ffmpeg"
+zip -q -g $VIRTUAL_ENV/../serverless-image-handler.zip ffmpeg
+echo "zip -q -g $VIRTUAL_ENV/../serverless-image-handler.zip ffprobe"
+zip -q -g $VIRTUAL_ENV/../serverless-image-handler.zip ffprobe
 cd ..
 zip -q -d serverless-image-handler.zip pip*
 zip -q -d serverless-image-handler.zip easy*

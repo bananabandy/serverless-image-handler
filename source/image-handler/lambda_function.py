@@ -155,10 +155,10 @@ def call_thumbor(request):
     unix_path = 'http+unix://%2Ftmp%2Fthumbor'
     http_health = '/healthcheck'
     retries = 10
-    while(retries > 0):
+    while retries > 0:
         try:
             response = session.get(unix_path + http_health)
-            if (response.status_code == 200):
+            if response.status_code == 200:
                 break
         except Exception as error:
             time.sleep(0.03)
@@ -186,6 +186,15 @@ def call_thumbor(request):
     if body is None:
         return response_formater(status_code='500',
                                  cache_control='no-cache,no-store')
+    if body is 'mp4' or body is 'webm':
+        return response_formater(status_code='200',
+                                 body=response.content,
+                                 cache_control=response.headers['Cache-Control'],
+                                 content_type=content_type,
+                                 expires=response.headers['Expires'],
+                                 etag=response.headers['Etag'],
+                                 date=response.headers['Date'])
+
     return response_formater(status_code='200',
                              body=body,
                              cache_control=response.headers['Cache-Control'],
@@ -199,7 +208,10 @@ def gen_body(ctype, content):
     '''Convert image to base64 to be sent as body response. '''
     try:
         format_ = ctype[ctype.find('/')+1:]
-        supported = ['jpeg', 'png', 'gif']
+        supported = ['jpeg', 'png', 'gif', 'webp']
+        supportedVideos = ['mp4', 'webm']
+        if format_ in supportedVideos:
+            return base64.b64encode(content)
         if format_ not in supported:
             None
         buffer_ = cStringIO.StringIO()

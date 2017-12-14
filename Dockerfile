@@ -2,6 +2,8 @@ FROM amazonlinux
 
 RUN echo 'alias ll="ls -ltha"' >> ~/.bashrc
 
+ARG NUM_CORES=2
+
 WORKDIR /tmp
 
 RUN yum-config-manager --enable epel && \
