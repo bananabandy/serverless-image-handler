@@ -4,7 +4,7 @@
   "Parameters": {
     "OriginS3Bucket": {
       "Description": "S3 bucket that will source your images.",
-      "Default": "original-images-bucket-name",
+      "Default": "%%BUCKET_NAME%%",
       "Type": "String",
       "ConstraintDescription": "Must be a valid S3 Bucket.",
       "MinLength": "1",
@@ -13,7 +13,7 @@
     },
     "OriginS3BucketRegion": {
       "Description": "S3 bucket Region that will source your images.",
-      "Default": "us-east-1",
+      "Default": "us-south-1",
       "Type": "String",
       "AllowedValues": [
         "ap-south-1",

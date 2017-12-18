@@ -6,10 +6,10 @@ image:
 	docker build --tag amazonlinux:python .
 
 package: image
-	docker run --rm --volume ${PWD}:/build amazonlinux:python sh ./deployment/build-s3-dist.sh testimgresize
+	docker run --rm --volume ${PWD}:/build amazonlinux:python sh ./deployment/build-s3-dist.sh indiefolio-images
 
 dist: package
-	cp .s3cfg ~/. && s3cmd put deployment/dist/serverless-image-handler.zip s3://testimgresize/serverless-image-handler.zip && s3cmd put deployment/dist/serverless-image-handler-custom-resource.zip s3://testimgresize/serverless-image-handler-custom-resource.zip
+	cp .s3cfg ~/. && s3cmd put deployment/dist/serverless-image-handler.template s3://indiefolio/solutions/serverless-image-handler.template && s3cmd put deployment/dist/serverless-image-handler.zip s3://indiefolio/solutions/serverless-image-handler.zip && s3cmd put deployment/dist/serverless-image-handler-custom-resource.zip s3://indiefolio/solutions/serverless-image-handler-custom-resource.zip
 
 clean:
 	docker rmi --force amazonlinux:python

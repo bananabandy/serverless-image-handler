@@ -120,5 +120,5 @@ zip -q -d serverless-image-handler.zip easy*
 echo "List files $VIRTUAL_ENV"
 ls -l $VIRTUAL_ENV
 echo "Clean up build material"
-#rm -rf $VIRTUAL_ENV
+rm -rf $VIRTUAL_ENV
 echo "Completed building distribution"
