@@ -16,28 +16,31 @@
 ##############################################################################
 
 from __future__ import print_function
-import cStringIO
+
 import base64
-import requests_unixsocket
-import threading
-import time
-import mimetypes
-import traceback
-import os.path
 import json
 import os
+import os.path
+import threading
+import time
 import timeit
+import traceback
+import warnings
 
+import cStringIO
+import requests_unixsocket
+from PIL import Image
 from image_handler import lambda_metrics
 from image_handler import lambda_rewrite
-from PIL import Image
+
+warnings.simplefilter('ignore', Image.DecompressionBombWarning)
+Image.MAX_IMAGE_PIXELS = 9162596898100
 from io import BytesIO
 
 from tornado.httpserver import HTTPServer
 from tornado.netutil import bind_unix_socket
 from tornado.options import options, define
 
-from thumbor.console import get_server_parameters
 from thumbor.context import ServerParameters
 from thumbor.server import *
 
