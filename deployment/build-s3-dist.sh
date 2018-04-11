@@ -81,6 +81,8 @@ cp -f /usr/bin/optipng $VIRTUAL_ENV
 cp -f /usr/bin/pngcrush $VIRTUAL_ENV
 cp -f /usr/bin/gifsicle $VIRTUAL_ENV
 cp -f /usr/bin/pngquant $VIRTUAL_ENV
+cp -f $deployment_dir/../ffmpeg/binary/ffmpeg $VIRTUAL_ENV
+cp -f $deployment_dir/../ffmpeg/binary/ffprobe $VIRTUAL_ENV
 cp -f /usr/lib64/libimagequant.so* $VIRTUAL_ENV/bin/lib
 #building mozjpeg
 cd $VIRTUAL_ENV
