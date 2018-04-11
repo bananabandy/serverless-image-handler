@@ -1,1 +1,1 @@
-thumbor-plugins>=0.2.0
+https://github.com/thumbor/thumbor-plugins/archive/master.zip

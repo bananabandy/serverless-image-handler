@@ -3,7 +3,7 @@
 all: package
 
 image:
-	docker build --tag amazonlinux:python .
+	docker build --force-rm --pull --no-cache --tag amazonlinux:python .
 
 package: image
 	docker run --rm --volume $(shell pwd):/build amazonlinux:python sh ./deployment/build-s3-dist.sh indiefolio-images
