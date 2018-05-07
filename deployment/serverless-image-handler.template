@@ -4,7 +4,7 @@
   "Parameters": {
     "OriginS3Bucket": {
       "Description": "S3 bucket that will source your images.",
-      "Default": "%%BUCKET_NAME%%",
+      "Default": "indiefolio-test",
       "Type": "String",
       "ConstraintDescription": "Must be a valid S3 Bucket.",
       "MinLength": "1",
@@ -13,7 +13,7 @@
     },
     "OriginS3BucketRegion": {
       "Description": "S3 bucket Region that will source your images.",
-      "Default": "us-south-1",
+      "Default": "ap-south-1",
       "Type": "String",
       "AllowedValues": [
         "ap-south-1",
@@ -102,8 +102,8 @@
     },
     "Function" : {
       "ImageHandler" : {
-	      "S3Bucket" : "%%BUCKET_NAME%%",
-	      "S3Key" : "serverless-image-handler/latest/serverless-image-handler.zip",
+	      "S3Bucket" : "indiefolio-test",
+	      "S3Key" : "solutions/serverless-image-handler.zip",
 	      "Name" : "serverless-image-handler",
 	      "Handler": "image_handler/lambda_function.lambda_handler",
         "Description": "Serverless Image Handler: This function is invoked by the serverless-image-handler API Gateway to manipulate images with Thumbor.",
@@ -112,8 +112,8 @@
         "MemorySize": "1536"
       },
       "CustomResource" : {
-	      "S3Bucket" : "%%BUCKET_NAME%%",
-	      "S3Key" : "serverless-image-handler/latest/serverless-image-handler-custom-resource.zip",
+	      "S3Bucket" : "indiefolio-test",
+	      "S3Key" : "solutions/serverless-image-handler-custom-resource.zip",
 	      "Name" : "serverless-image-handler-custom-resource",
 	      "Handler": "image_handler_custom_resource/cfn_custom_resource.lambda_handler",
         "Description": "Serverless Image Handler: CloudFormation custom resource function invoked during CloudFormation create, update, and delete stack operations.",
@@ -124,8 +124,8 @@
     },
     "UI" : {
       "Src" : {
-        "Bucket" : "%%BUCKET_NAME%%",
-	      "Key" : "serverless-image-handler/latest/serverless-image-handler-ui.zip"
+        "Bucket" : "indiefolio-test",
+	      "Key" : "solutions/serverless-image-handler-ui.zip"
       },
       "FindReplace" : {
         "DomainName"  : "%%CloudFrontDomainName%%",
