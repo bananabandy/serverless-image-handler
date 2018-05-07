@@ -26,17 +26,15 @@ fi
 # Build source
 echo "Staring to build distribution"
 echo "export deployment_dir=`pwd`"
-export deployment_dir=`pwd`/deployment
-echo "rm -Rf $deployment_dir/dist"
-rm -Rf $deployment_dir/dist
-echo "mkdir -p $deployment_dir/dist"
-mkdir -p $deployment_dir/dist
-echo "cp -f $deployment_dir/serverless-image-handler.template $deployment_dir/dist/."
-cp -f $deployment_dir/serverless-image-handler.template $deployment_dir/dist/.
+export deployment_dir=`pwd`
+echo "mkdir -p dist"
+mkdir -p dist
+echo "cp -f serverless-image-handler.template dist"
+cp -f serverless-image-handler.template dist
 echo "Updating code source bucket in template with $1"
 replace="s/%%BUCKET_NAME%%/$1/g"
-echo "sed -i '' -e $replace $deployment_dir/dist/serverless-image-handler.template"
-sed -i '' -e $replace $deployment_dir/dist/serverless-image-handler.template
+echo "sed -i '' -e $replace dist/serverless-image-handler.template"
+sed -i '' -e $replace dist/serverless-image-handler.template
 echo "Creating UI ZIP file"
 cd $deployment_dir/../source/ui
 zip -q -r9 $deployment_dir/dist/serverless-image-handler-ui.zip *
@@ -63,10 +61,12 @@ virtualenv env
 echo "source env/bin/activate"
 source env/bin/activate
 pwd
-echo "pip install $deployment_dir/../source/image-handler/. --target=$VIRTUAL_ENV/lib/python2.7/site-packages/"
-pip install $deployment_dir/../source/image-handler/. --target=$VIRTUAL_ENV/lib/python2.7/site-packages/
-echo "pip install -r $deployment_dir/../source/image-handler/requirements.txt --target=$VIRTUAL_ENV/lib/python2.7/site-packages/"
-pip install -r $deployment_dir/../source/image-handler/requirements.txt --target=$VIRTUAL_ENV/lib/python2.7/site-packages/
+echo "pip install source/image-handler/. --target=$VIRTUAL_ENV/lib/python2.7/site-packages/"
+pip install source/image-handler/. --target=$VIRTUAL_ENV/lib/python2.7/site-packages/
+echo "pip install -r source/image-handler/requirements.txt --target=$VIRTUAL_ENV/lib/python2.7/site-packages/"
+pip install -r source/image-handler/requirements.txt --target=$VIRTUAL_ENV/lib/python2.7/site-packages/
+cp -f source/ffmpeg/binary/ffmpeg $VIRTUAL_ENV
+cp -f source/ffmpeg/binary/ffprobe $VIRTUAL_ENV
 cd $VIRTUAL_ENV
 pwd
 #building pngquant
@@ -81,8 +81,6 @@ cp -f /usr/bin/optipng $VIRTUAL_ENV
 cp -f /usr/bin/pngcrush $VIRTUAL_ENV
 cp -f /usr/bin/gifsicle $VIRTUAL_ENV
 cp -f /usr/bin/pngquant $VIRTUAL_ENV
-cp -f $deployment_dir/../ffmpeg/binary/ffmpeg $VIRTUAL_ENV
-cp -f $deployment_dir/../ffmpeg/binary/ffprobe $VIRTUAL_ENV
 cp -f /usr/lib64/libimagequant.so* $VIRTUAL_ENV/bin/lib
 #building mozjpeg
 cd $VIRTUAL_ENV
@@ -122,10 +120,6 @@ cp -f /usr/lib64/libjbig.so* $VIRTUAL_ENV/bin/lib
 #packing all
 cd $VIRTUAL_ENV/lib/python2.7/site-packages
 pwd
-echo "cp $deployment_dir/../ffmpeg/binary/ffmpeg ."
-cp $deployment_dir/../ffmpeg/binary/ffmpeg .
-echo "cp $deployment_dir/../ffmpeg/binary/ffprobe ."
-cp $deployment_dir/../ffmpeg/binary/ffprobe .
 echo "zip -q -r9 $VIRTUAL_ENV/../serverless-image-handler.zip *"
 zip -q -r9 $VIRTUAL_ENV/../serverless-image-handler.zip *
 cd $VIRTUAL_ENV
