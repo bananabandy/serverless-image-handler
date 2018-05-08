@@ -98,7 +98,7 @@ cd mozjpeg
 autoreconf -fiv
 mkdir build && cd build
 sh ../configure
-make install prefix=/var/task libdir=/var/task
+sudo make install prefix=/var/task libdir=/var/task
 cp -f /var/task/libjpeg.so* $VIRTUAL_ENV/bin/lib
 cp -f /var/task/bin/jpegtran $VIRTUAL_ENV/mozjpeg
 #building imgmin
@@ -110,7 +110,7 @@ cd imgmin
 autoreconf -fi
 ./configure
 make
-make install
+sudo make install
 cd $VIRTUAL_ENV
 rm -rf imgmin
 cp -f "/usr/local/bin/imgmin" $VIRTUAL_ENV
