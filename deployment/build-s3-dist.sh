@@ -153,9 +153,8 @@ zip -r -q -g $VIRTUAL_ENV/../serverless-image-handler.zip lib
 cd $VIRTUAL_ENV
 pwd
 cd ..
-pwd
 zip -q -d serverless-image-handler.zip pip*
 zip -q -d serverless-image-handler.zip easy*
 echo "Clean up build material"
-#rm -rf $VIRTUAL_ENV
+rm -rf $VIRTUAL_ENV
 echo "Completed building distribution"
