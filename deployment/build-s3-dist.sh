@@ -63,6 +63,8 @@ source env/bin/activate
 pwd
 echo "pip install $deployment_dir/../source/tornado-botocore/. --target=$VIRTUAL_ENV/lib/python2.7/site-packages/"
 pip install $deployment_dir/../source/tornado-botocore/. --target=$VIRTUAL_ENV/lib/python2.7/site-packages/
+echo "pip install $deployment_dir/../source/tc_aws-6.2.7/. --target=$VIRTUAL_ENV/lib/python2.7/site-packages/"
+pip install $deployment_dir/../source/tc_aws-6.2.7/. --target=$VIRTUAL_ENV/lib/python2.7/site-packages/
 echo "pip install $deployment_dir/../source/image-handler/. --target=$VIRTUAL_ENV/lib/python2.7/site-packages/"
 pip install $deployment_dir/../source/image-handler/. --target=$VIRTUAL_ENV/lib/python2.7/site-packages/
 echo "pip install -r $deployment_dir/../source/image-handler/requirements.txt --target=$VIRTUAL_ENV/lib/python2.7/site-packages/"
