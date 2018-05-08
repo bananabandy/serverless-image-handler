@@ -149,7 +149,7 @@ zip -q -g $VIRTUAL_ENV/../serverless-image-handler.zip ffprobe
 cd $VIRTUAL_ENV/bin
 pwd
 echo "zip -r -q -g $VIRTUAL_ENV/../serverless-image-handler.zip lib"
-zip -r -q -g $VIRTUAL_ENV/../serverless-image-handler.zip $deployment_dir/dist/env/lib
+zip -r -q -g $VIRTUAL_ENV/../serverless-image-handler.zip lib
 cd $VIRTUAL_ENV
 pwd
 cd ..
