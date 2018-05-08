@@ -148,7 +148,8 @@ echo "zip -r -q -g $VIRTUAL_ENV/../serverless-image-handler.zip lib"
 zip -r -q -g $VIRTUAL_ENV/../serverless-image-handler.zip $deployment_dir/dist/env/lib
 cd $VIRTUAL_ENV
 pwd
-cd $deployment_dir/dist
+cd ..
+pwd
 zip -q -d serverless-image-handler.zip pip*
 zip -q -d serverless-image-handler.zip easy*
 echo "Clean up build material"
