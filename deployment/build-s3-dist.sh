@@ -145,12 +145,12 @@ zip -q -g $VIRTUAL_ENV/../serverless-image-handler.zip ffprobe
 cd $VIRTUAL_ENV/bin
 pwd
 echo "zip -r -q -g $VIRTUAL_ENV/../serverless-image-handler.zip lib"
-zip -r -q -g $VIRTUAL_ENV/../serverless-image-handler.zip lib
+zip -r -q -g $VIRTUAL_ENV/../serverless-image-handler.zip $deployment_dir/dist/env/lib
 cd $VIRTUAL_ENV
 pwd
 cd ..
 zip -q -d serverless-image-handler.zip $deployment_dir/dist/env/bin/pip*
 zip -q -d serverless-image-handler.zip $deployment_dir/dist/env/bin/easy*
 echo "Clean up build material"
-rm -rf $VIRTUAL_ENV
+#rm -rf $VIRTUAL_ENV
 echo "Completed building distribution"
