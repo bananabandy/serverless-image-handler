@@ -78,8 +78,8 @@ cp -f pngquant $VIRTUAL_ENV
 echo "yum install optipng pngcrush gifsicle libjpeg* pngquant ImageMagick-devel -y"
 sudo yum install optipng pngcrush gifsicle libjpeg* pngquant ImageMagick-devel -y
 mkdir $VIRTUAL_ENV/bin/lib
-cp -f $deployment_dir/../source/ffmpeg/binary/ffmpeg $VIRTUAL_ENV
-cp -f $deployment_dir/../source/ffmpeg/binary/ffprobe $VIRTUAL_ENV
+#cp -f $deployment_dir/../source/ffmpeg/binary/ffmpeg $VIRTUAL_ENV
+#cp -f $deployment_dir/../source/ffmpeg/binary/ffprobe $VIRTUAL_ENV
 cp -f /usr/bin/jpegtran $VIRTUAL_ENV
 cp -f /usr/bin/optipng $VIRTUAL_ENV
 cp -f /usr/bin/pngcrush $VIRTUAL_ENV
@@ -142,10 +142,10 @@ echo "zip -q -g $VIRTUAL_ENV/../serverless-image-handler.zip mozjpeg"
 zip -q -g $VIRTUAL_ENV/../serverless-image-handler.zip mozjpeg
 echo "zip -q -g $VIRTUAL_ENV/../serverless-image-handler.zip imgmin"
 zip -q -g $VIRTUAL_ENV/../serverless-image-handler.zip imgmin
-echo "zip -q -g $VIRTUAL_ENV/../serverless-image-handler.zip ffmpeg"
-zip -q -g $VIRTUAL_ENV/../serverless-image-handler.zip ffmpeg
-echo "zip -q -g $VIRTUAL_ENV/../serverless-image-handler.zip ffprobe"
-zip -q -g $VIRTUAL_ENV/../serverless-image-handler.zip ffprobe
+#echo "zip -q -g $VIRTUAL_ENV/../serverless-image-handler.zip ffmpeg"
+#zip -q -g $VIRTUAL_ENV/../serverless-image-handler.zip ffmpeg
+#echo "zip -q -g $VIRTUAL_ENV/../serverless-image-handler.zip ffprobe"
+#zip -q -g $VIRTUAL_ENV/../serverless-image-handler.zip ffprobe
 cd $VIRTUAL_ENV/bin
 pwd
 echo "zip -r -q -g $VIRTUAL_ENV/../serverless-image-handler.zip lib"
@@ -156,5 +156,5 @@ cd ..
 zip -q -d serverless-image-handler.zip pip*
 zip -q -d serverless-image-handler.zip easy*
 echo "Clean up build material"
-rm -rf $VIRTUAL_ENV
+sudo rm -rf $VIRTUAL_ENV
 echo "Completed building distribution"
