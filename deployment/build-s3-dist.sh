@@ -76,7 +76,7 @@ echo "cp pngquant $VIRTUAL_ENV"
 cp -f pngquant $VIRTUAL_ENV
 #installing optipng pngcrush gifsicle jpegtran
 echo "yum install optipng pngcrush gifsicle libjpeg* pngquant ImageMagick-devel -y"
-yum install optipng pngcrush gifsicle libjpeg* pngquant ImageMagick-devel -y
+sudo yum install optipng pngcrush gifsicle libjpeg* pngquant ImageMagick-devel -y
 mkdir $VIRTUAL_ENV/bin/lib
 cp -f $deployment_dir/../source/ffmpeg/binary/ffmpeg $VIRTUAL_ENV
 cp -f $deployment_dir/../source/ffmpeg/binary/ffprobe $VIRTUAL_ENV
@@ -90,7 +90,7 @@ cp -f /usr/lib64/libimagequant.so* $VIRTUAL_ENV/bin/lib
 cd $VIRTUAL_ENV
 pwd
 echo 'yum install nasm autoconf automake libtool -y'
-yum install nasm autoconf automake libtool -y
+sudo yum install nasm autoconf automake libtool -y
 echo 'wget https://github.com/mozilla/mozjpeg/releases/download/v3.2/mozjpeg-3.2-release-source.tar.gz'
 wget https://github.com/mozilla/mozjpeg/releases/download/v3.2/mozjpeg-3.2-release-source.tar.gz
 tar -zxvf mozjpeg-3.2-release-source.tar.gz 
