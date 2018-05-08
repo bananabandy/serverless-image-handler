@@ -79,3 +79,4 @@ pip-selfcheck.json
 .directory
 .Trash-*
 .nfs*
+/deployment/dist/
