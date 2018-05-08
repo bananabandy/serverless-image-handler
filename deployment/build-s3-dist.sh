@@ -61,10 +61,10 @@ virtualenv env
 echo "source env/bin/activate"
 source env/bin/activate
 pwd
-echo "pip install source/image-handler/. --target=$VIRTUAL_ENV/lib/python2.7/site-packages/"
-pip install source/image-handler/. --target=$VIRTUAL_ENV/lib/python2.7/site-packages/
-echo "pip install -r source/image-handler/requirements.txt --target=$VIRTUAL_ENV/lib/python2.7/site-packages/"
-pip install -r source/image-handler/requirements.txt --target=$VIRTUAL_ENV/lib/python2.7/site-packages/
+echo "pip install $deployment_dir/../source/image-handler/. --target=$VIRTUAL_ENV/lib/python2.7/site-packages/"
+pip install $deployment_dir/../source/image-handler/. --target=$VIRTUAL_ENV/lib/python2.7/site-packages/
+echo "pip install -r $deployment_dir/../source/image-handler/requirements.txt --target=$VIRTUAL_ENV/lib/python2.7/site-packages/"
+pip install -r $deployment_dir/../source/image-handler/requirements.txt --target=$VIRTUAL_ENV/lib/python2.7/site-packages/
 cd $VIRTUAL_ENV
 pwd
 #building pngquant
@@ -74,8 +74,8 @@ cp -f pngquant $VIRTUAL_ENV
 echo "yum install optipng pngcrush gifsicle libjpeg* pngquant ImageMagick-devel -y"
 yum install optipng pngcrush gifsicle libjpeg* pngquant ImageMagick-devel -y
 mkdir $VIRTUAL_ENV/bin/lib
-cp -f $deployment_dir/../../source/ffmpeg/binary/ffmpeg $VIRTUAL_ENV
-cp -f $deployment_dir/../../source/ffmpeg/binary/ffprobe $VIRTUAL_ENV
+cp -f $deployment_dir/../source/ffmpeg/binary/ffmpeg $VIRTUAL_ENV
+cp -f $deployment_dir/../source/ffmpeg/binary/ffprobe $VIRTUAL_ENV
 cp -f /usr/bin/jpegtran $VIRTUAL_ENV
 cp -f /usr/bin/optipng $VIRTUAL_ENV
 cp -f /usr/bin/pngcrush $VIRTUAL_ENV
