@@ -50,8 +50,8 @@ pip install $deployment_dir/../source/image-handler-custom-resource/. --target=$
 cd $deployment_dir/dist/env/lib/python2.7/site-packages/
 zip -r9 $deployment_dir/dist/serverless-image-handler-custom-resource.zip *
 cd $deployment_dir/dist
-zip -q -d serverless-image-handler-custom-resource.zip $deployment_dir/dist/env/bin/pip*
-zip -q -d serverless-image-handler-custom-resource.zip $deployment_dir/dist/env/bin/easy*
+zip -q -d serverless-image-handler-custom-resource.zip pip*
+zip -q -d serverless-image-handler-custom-resource.zip easy*
 rm -rf env
 echo "Building Image Handler package ZIP file"
 cd $deployment_dir/dist
