@@ -210,12 +210,10 @@ def request_thumbor(original_request, session):
 
 
 def process_thumbor_responde(thumbor_response, vary):
-    logging.error('vary: %s' % (vary))
-    logging.error('vary 2: %s' % (thumbor_response.headers['vary']))
     if thumbor_response.status_code != 200:
         return response_formater(status_code=thumbor_response.status_code)
     if vary:
-        vary = thumbor_response.headers['vary']
+        vary = 'Accept'
     content_type = thumbor_response.headers['content-type']
     body = gen_body(content_type, thumbor_response.content)
     if body is None:
