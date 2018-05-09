@@ -1,2 +1,2 @@
 botocore==1.2.0
-tornado==5.0
+tornado==4.5.3
