@@ -1,5 +1,0 @@
-.idea
-*.pyc
-.env
-dist
-tornado_botocore.egg-info
