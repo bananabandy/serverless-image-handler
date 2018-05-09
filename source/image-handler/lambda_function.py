@@ -34,6 +34,7 @@ from PIL import Image
 from io import BytesIO
 from distutils.util import strtobool
 
+Image.MAX_IMAGE_PIXELS = 9162596898100
 from tornado.httpserver import HTTPServer
 from tornado.netutil import bind_unix_socket
 from tornado.options import options, define
@@ -213,7 +214,7 @@ def request_thumbor(original_request, session):
 
 def process_thumbor_responde(thumbor_response, vary):
      if thumbor_response.status_code != 200:
-         return response_formater(status_code=thumbor_response.status_code)
+         return response_formater(status_code=response.status_code)
      if vary:
          vary = thumbor_response.headers['vary']
      content_type = thumbor_response.headers['content-type']
