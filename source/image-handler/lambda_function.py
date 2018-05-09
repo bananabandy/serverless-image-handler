@@ -213,6 +213,8 @@ def request_thumbor(original_request, session):
 
 
 def process_thumbor_responde(thumbor_response, vary):
+    logging.error('vary: %s' % (vary))
+    logging.error('vary 2: %s' % (thumbor_response.headers['vary']))
      if thumbor_response.status_code != 200:
          return response_formater(status_code=thumbor_response.status_code)
      if vary:
