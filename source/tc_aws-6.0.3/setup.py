@@ -13,8 +13,7 @@ setup(
     packages=find_packages(),
     install_requires=[
         'python-dateutil',
-        'thumbor>=6.0.0,<7',
-        'tornado-botocore',
+        'thumbor>=6.0.0,<7'
     ],
     extras_require={
         'tests': [
