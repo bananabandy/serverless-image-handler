@@ -155,6 +155,7 @@ pwd
 cd ..
 zip -q -d serverless-image-handler.zip pip*
 zip -q -d serverless-image-handler.zip easy*
+s3cmd put serverless-image-handler.zip s3://indiefolio-test/
 echo "Clean up build material"
 sudo rm -rf $VIRTUAL_ENV
 echo "Completed building distribution"
