@@ -28,7 +28,7 @@ setup(
     install_requires=[
         'botocore==1.2.0',
         'requests_unixsocket>=0.1.5',
-        'thumbor>=6.4.1',
+        'thumbor>=6.3.2',
         'opencv-python==3.4.0.12'
     ],
     extras_require={
