@@ -8,7 +8,7 @@
 # http://www.opensource.org/licenses/mit-license
 # Copyright (c) 2011 globo.com thumbor@googlegroups.com
 
-from urllib2 import quote, unquote
+from six.moves.urllib.parse import quote, unquote
 
 from thumbor.handlers import ContextHandler
 from thumbor.context import RequestParameters
@@ -74,6 +74,9 @@ class ImagingHandler(ContextHandler):
 
             valid = signer.validate(unquote(url_signature), url_to_validate)
 
+            self._error(400, 'Urls signature: %s' % url_signature)
+
+            self._error(400, 'Url to validate: %s' % url_to_validate)
             if not valid and self.context.config.STORES_CRYPTO_KEY_FOR_EACH_IMAGE:
                 # Retrieves security key for this image if it has been seen before
                 security_key = yield gen.maybe_future(self.context.modules.storage.get_crypto(self.context.request.image_url))
