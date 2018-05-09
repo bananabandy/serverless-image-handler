@@ -173,10 +173,6 @@ def allow_unsafe_url(http_path):
 
 
 def rewrite(http_path):
-    logging.info(
-        'HTTP PATH %s' %
-        (http_path)
-    )
     if str(os.environ.get('REWRITE_ENABLED')).upper() == 'YES':
         http_path = lambda_rewrite.match_patterns(http_path)
     return http_path
