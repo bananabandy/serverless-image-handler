@@ -115,7 +115,7 @@ make
 sudo make install
 cd $VIRTUAL_ENV
 rm -rf imgmin
-cp -f "/usr/local/bin/imgmin" $VIRTUAL_ENV
+cp -f /usr/local/bin/imgmin $VIRTUAL_ENV
 cp -f /usr/lib64/libMagickWand.so* $VIRTUAL_ENV/bin/lib
 cp -f /usr/lib64/libMagickCore.so* $VIRTUAL_ENV/bin/lib
 cp -f /usr/lib64/libgomp.so* $VIRTUAL_ENV/bin/lib

@@ -16,30 +16,27 @@
 ##############################################################################
 
 from __future__ import print_function
-import cStringIO
+
 import base64
-import requests_unixsocket
-import threading
-import time
-import mimetypes
-import traceback
-import os.path
 import json
 import os
+import os.path
+import threading
+import time
 import timeit
-import ast
+import traceback
+from distutils.util import strtobool
+
+import requests_unixsocket
+from PIL import Image
 from image_handler import lambda_metrics
 from image_handler import lambda_rewrite
-from PIL import Image
-from io import BytesIO
-from distutils.util import strtobool
 
 Image.MAX_IMAGE_PIXELS = 9162596898100
 from tornado.httpserver import HTTPServer
 from tornado.netutil import bind_unix_socket
 from tornado.options import options, define
 
-from thumbor.console import get_server_parameters
 from thumbor.context import ServerParameters
 from thumbor.server import *
 
@@ -57,7 +54,6 @@ def response_formater(status_code='400',
                       date='',
                       vary=False
                       ):
-
     api_response = {
         'statusCode': status_code,
         'headers': {
@@ -82,6 +78,7 @@ def response_formater(status_code='400',
         api_response['headers']['Vary'] = vary
     logging.debug(api_response)
     return api_response
+
 
 def run_server(application, context):
     server = HTTPServer(application)
@@ -125,9 +122,9 @@ def start_thumbor():
             run_server(application, thumbor_context)
             tornado.ioloop.IOLoop.instance().start()
             logging.info(
-                        'thumbor running at %s:%d' %
-                        (thumbor_context.server.ip, thumbor_context.server.port)
-                        )
+                'thumbor running at %s:%d' %
+                (thumbor_context.server.ip, thumbor_context.server.port)
+            )
             return config
     except RuntimeError as error:
         if str(error) != "IOLoop is already running":
@@ -157,7 +154,7 @@ def restart_server():
 
 
 def auto_webp(original_request, request_headers):
-    headers = {'Accept':'*/*'}
+    headers = {'Accept': '*/*'}
     vary = bool(strtobool(str(config.AUTO_WEBP)))
     if vary:
         if original_request.get('headers'):
@@ -179,28 +176,28 @@ def rewrite(http_path):
 
 
 def is_thumbor_down():
-     if not os.path.exists(thumbor_socket):
-         start_server()
-     session = requests_unixsocket.Session()
-     http_health = '/healthcheck'
-     retries = 10
-     while(retries > 0):
-         try:
-             response = session.get(unix_path + http_health)
-             if (response.status_code == 200):
-                 break
-         except Exception as error:
-             time.sleep(0.03)
-             retries -= 1
-             continue
-     if retries <= 0:
-         logging.error(
-             'call_thumbor error: tornado server unavailable,\
-             proceeding with tornado server restart'
-         )
-         restart_server()
-         return response_formater(status_code='502')
-     return False, session
+    if not os.path.exists(thumbor_socket):
+        start_server()
+    session = requests_unixsocket.Session()
+    http_health = '/healthcheck'
+    retries = 10
+    while (retries > 0):
+        try:
+            response = session.get(unix_path + http_health)
+            if (response.status_code == 200):
+                break
+        except Exception as error:
+            time.sleep(0.03)
+            retries -= 1
+            continue
+    if retries <= 0:
+        logging.error(
+            'call_thumbor error: tornado server unavailable,\
+            proceeding with tornado server restart'
+        )
+        restart_server()
+        return response_formater(status_code='502')
+    return False, session
 
 
 def request_thumbor(original_request, session):
@@ -215,24 +212,24 @@ def request_thumbor(original_request, session):
 def process_thumbor_responde(thumbor_response, vary):
     logging.error('vary: %s' % (vary))
     logging.error('vary 2: %s' % (thumbor_response.headers['vary']))
-     if thumbor_response.status_code != 200:
-         return response_formater(status_code=thumbor_response.status_code)
-     if vary:
-         vary = thumbor_response.headers['vary']
-     content_type = thumbor_response.headers['content-type']
-     body = gen_body(content_type, thumbor_response.content)
-     if body is None:
-         return response_formater(status_code='500',
-                                  cache_control='no-cache,no-store')
-     return response_formater(status_code='200',
-                              body=body,
-                              cache_control=thumbor_response.headers['Cache-Control'],
-                              content_type=content_type,
-                              expires=thumbor_response.headers['Expires'],
-                              etag=thumbor_response.headers['Etag'],
-                              date=thumbor_response.headers['Date'],
-                              vary=vary
-                              )
+    if thumbor_response.status_code != 200:
+        return response_formater(status_code=thumbor_response.status_code)
+    if vary:
+        vary = thumbor_response.headers['vary']
+    content_type = thumbor_response.headers['content-type']
+    body = gen_body(content_type, thumbor_response.content)
+    if body is None:
+        return response_formater(status_code='500',
+                                 cache_control='no-cache,no-store')
+    return response_formater(status_code='200',
+                             body=body,
+                             cache_control=thumbor_response.headers['Cache-Control'],
+                             content_type=content_type,
+                             expires=thumbor_response.headers['Expires'],
+                             etag=thumbor_response.headers['Etag'],
+                             date=thumbor_response.headers['Date'],
+                             vary=vary
+                             )
 
 
 def call_thumbor(original_request):
@@ -246,7 +243,7 @@ def call_thumbor(original_request):
 def gen_body(ctype, content):
     '''Convert image to base64 to be sent as body response. '''
     try:
-        format_ = ctype[ctype.find('/')+1:]
+        format_ = ctype[ctype.find('/') + 1:]
         supported = ['jpeg', 'png', 'gif', 'webp', 'mp4', 'webm']
         if format_ not in supported:
             None
@@ -260,10 +257,11 @@ def gen_body(ctype, content):
 def send_metrics(event, result, start_time):
     t = threading.Thread(
         target=lambda_metrics.send_data,
-        args=(event, result, start_time, )
+        args=(event, result, start_time,)
     )
     t.start()
     return t
+
 
 def lambda_handler(event, context):
     try:
@@ -271,14 +269,14 @@ def lambda_handler(event, context):
         global log_level
         log_level = str(os.environ.get('LOG_LEVEL')).upper()
         if log_level not in [
-                                'DEBUG', 'INFO',
-                                'WARNING', 'ERROR',
-                                'CRITICAL'
-                            ]:
+            'DEBUG', 'INFO',
+            'WARNING', 'ERROR',
+            'CRITICAL'
+        ]:
             log_level = 'ERROR'
         logging.getLogger().setLevel(log_level)
-        if event['requestContext']['httpMethod'] != 'GET' and\
-           event['requestContext']['httpMethod'] != 'HEAD':
+        if event['requestContext']['httpMethod'] != 'GET' and \
+                event['requestContext']['httpMethod'] != 'HEAD':
             return response_formater(status_code=405)
         result = call_thumbor(event)
         if str(os.environ.get('SEND_ANONYMOUS_DATA')).upper() == 'YES':
